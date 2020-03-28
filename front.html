@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="frontPack.js"></script>
+        <style>
+            body {
+                background-image: url(https://w-dog.ru/wallpapers/14/2/474989027697792/pole-trava-derevya-nebo-gory-8-bit.jpg);
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas style="position: fixed; left: 0; top: 0; border:1px solid #858585" id="table" width="100" height="100">
+            GAME
+        </canvas>
+        <div style="display:none;">
+            <img id="source"
+                 src="https://stackabuse.s3.amazonaws.com/media/creating-a-platformer-with-phaser-3-9.png"
+                 width="40" height="40">
+        </div>
+        <div style="display:none;">
+            <img id="source1"
+                 src="https://opengameart.org/sites/default/files/Platform%20Tile%20Grass_0.png"
+                 width="40" height="40">
+        </div>
+        <div style="display:none;">
+            <img id="source2"
+                 src="http://pixelartmaker.com/art/291bc209be76951.png"
+                 width="40" height="40">
+        </div>
+        <div style="display:none;">
+            <img id="source3"
+                 src="https://clip.cookdiary.net/sites/default/files/styles/225x120/public/wallpaper/stairs-clipart/131184/stairs-clipart-hagdan-131184-9115249.png"
+                 width="40" height="40">
+        </div>
+        <div style="display:none;">
+            <img id="source4"
+                 src="https://img.icons8.com/color/2x/saw-blade.png"
+                 width="40" height="40">
+        </div>
+        <div style="display:none;">
+            <img id="source5"
+                 src="https://2img.net/h/i421.photobucket.com/albums/pp292/SharkD2161/GearHead/Projectile_Flamethrower_sheet.png"
+                 width="40" height="40">
+        </div>
+        <script>
+            document.getElementById('table').width = document.documentElement.clientWidth;
+            document.getElementById('table').height = document.documentElement.clientHeight;
+            let step = 0;
+            const image = document.getElementById('source');
+            let frontSide = function (canvasId, serverAdress) {
+                let ctx = document.getElementById(canvasId).getContext("2d");
+                let socket = new WebSocket(serverAdress);
+                socket.onopen = function () {
+                    console.log('The connection is established');
+                };
+                socket.onclose = function (event) {
+                    if (event.wasClean) {
+                        console.log('The connection is closed clearly');
+                    } else {
+                        console.log('Lost signal');
+                    }
+                    console.log('Code: ' + event.code + ' reason: ' + event.reason);
+                };
+
+                function setCookie(cname, cvalue, exdays) {
+                    let d = new Date();
+                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                    let expires = "expires=" + d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                }
+
+                function getCookie(cname) {
+                    let name = cname + "=";
+                    let ca = document.cookie.split(';');
+                    for (let i = 0; i < ca.length; i++) {
+                        let c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }
+
+                function checkCookie() {
+                    let user = getCookie("gameToken");
+                    if (user != "") {
+                    } else {
+                        user = uuidv4();
+                        if (user != "" && user != null) {
+                            setCookie("gameToken", user, 365);
+                        }
+                    }
+                }
+
+                function uuidv4() {
+                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                        return v.toString(16);
+                    });
+                }
+
+                let draw = function (data) {
+                    ctx.clearRect(0, 0, data.session.width, data.session.height);
+                    for (let i = data.session.layers[0]; i < data.session.layers[2]; i += 50)
+                        ctx.drawImage(document.getElementById('source3'), 180, 0, 640, 480, 0, i, 50,  50);
+                    for (let i = data.session.layers[0]; i < data.session.layers[2]; i += 50)
+                        ctx.drawImage(document.getElementById('source3'), 180, 0, 640, 480, data.session.width - 22, i, 50,  50);
+                    ctx.drawImage(document.getElementById('source2'), 0, 0, 310, 410, data.session.width - 40, data.session.layers[0] - 50, 40,  50);
+                    data.session.enemies[0].coords.forEach(element => {
+                        ctx.fillText("hp: " + element.hp, element.x - 20, element.y - 20);
+                        ctx.drawImage(document.getElementById('source4'), 0, 0, 96, 96, element.x - 20, element.y - 20, 40,  40);
+                    });
+                    for (let i = 0; i < 3; i++) {
+                        for (let j = 0; j < data.session.width; j += data.session.width / 40) {
+                            ctx.drawImage(document.getElementById('source1'), 0, 0, 128, 128, j, data.session.layers[i], 40,  40);
+                        }
+                    }
+                    if (data.session.bullet.active != 0) {
+                        if (data.session.bullet.active == 1)
+                            ctx.drawImage(document.getElementById('source5'), 0, 0, 64, 64, data.session.bullet.x, data.session.bullet.y - 30, 30, 30);
+                        else
+                            ctx.drawImage(document.getElementById('source5'), 0, 64*2, 64, 64, data.session.bullet.x, data.session.bullet.y - 30, 30, 30);
+                    }
+                    ctx.fillText("hp: " + data.session.hero.hp,data.session.hero.x - 30, data.session.hero.y - 60);
+                    if (step <= 15)
+                        ctx.drawImage(image, 96*2, 0, 96, 96, data.session.hero.x - 30, data.session.hero.y - 60,  60,  60);
+                    else if (step <= 30) {
+                        ctx.drawImage(image, 96 * 3, 0, 96, 96, data.session.hero.x - 30, data.session.hero.y - 60, 60, 60);
+                    } else {
+                        ctx.drawImage(image, 96*2, 0, 96, 96, data.session.hero.x - 30, data.session.hero.y - 60,  60,  60);
+                        step = 0;
+                    }
+                    step++;
+                };
+
+                checkCookie();
+
+                window.addEventListener('keydown', function (event) {
+                    if (event.code === "KeyA") {
+                        socket.send(JSON.stringify({
+                            command : 0,
+                            token : getCookie("gameToken"),
+                            width : document.documentElement.clientWidth,
+                            height : document.documentElement.clientHeight
+                        }));
+                    }
+                });
+                window.addEventListener('keydown', function (event) {
+                    if (event.code === "KeyD") {
+                        socket.send(JSON.stringify({
+                            command : 1,
+                            token : getCookie("gameToken"),
+                            width : document.documentElement.clientWidth,
+                            height : document.documentElement.clientHeight
+                        }));
+                    }
+                });
+                window.addEventListener('keydown', function (event) {
+                    if (event.code === "KeyW") {
+                        socket.send(JSON.stringify({
+                            command : 2,
+                            token : getCookie("gameToken"),
+                            width : document.documentElement.clientWidth,
+                            height : document.documentElement.clientHeight
+                        }));
+                    }
+                });
+                window.addEventListener('keydown', function (event) {
+                    if (event.code === "KeyS") {
+                        socket.send(JSON.stringify({
+                            command : 3,
+                            token : getCookie("gameToken"),
+                            width : document.documentElement.clientWidth,
+                            height : document.documentElement.clientHeight
+                        }));
+                    }
+                });
+                window.addEventListener('keydown', function (event) {
+                    if (event.code === "Space") {
+                        socket.send(JSON.stringify({
+                            command : 4,
+                            token : getCookie("gameToken"),
+                            width : document.documentElement.clientWidth,
+                            height : document.documentElement.clientHeight
+                        }));
+                    }
+                });
+                setInterval(function (){socket.send(JSON.stringify({
+                    command : 11,
+                    token : getCookie("gameToken"),
+                    width : document.documentElement.clientWidth,
+                    height : document.documentElement.clientHeight
+                }))}, 20);
+                socket.onmessage = function (event) {
+                    if (JSON.parse(event.data).session.status === "victory")
+                        alert("You win!");
+                    else if (JSON.parse(event.data).session.status === "gameover")
+                        alert("Game over :(");
+                    draw(JSON.parse(event.data));
+                };
+            };
+            frontSide("table", "ws://localhost:1235");
+
+        </script>
+    </body>
+</html>
