@@ -1,5 +1,5 @@
 const swaggerJSDoc = require("swagger-jsdoc");
-const ip = "localhost:1234";
+const ip = "95.217.212.200:1234";
 
 const apiSHeader = {
     swaggerDefinition : {
