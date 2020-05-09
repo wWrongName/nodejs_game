@@ -1,6 +1,8 @@
+const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 const express   = require("express");
-const openApi   = require("./openApi");
+const ApiHead   = require("./openApi");
+const openApi   = swaggerJSDoc(ApiHead);
 const fs        = require('fs');
 const app       = express();
 const newWS     = new require('ws');
@@ -9,7 +11,7 @@ app.use("/api", swaggerUI.serve, swaggerUI.setup(openApi));
 
 app.get("/game", (req, res) => {
     console.log("New user connected");
-    fs.readFile("./front.html", function (err, data) {
+    fs.readFile(ApiHead.path + "/front.html", function (err, data) {
         if (err) {
             res.writeHead(404, {'Content-Type': 'text/html'});
             return res.end('404 Not Found');
