@@ -1,8 +1,8 @@
-const swaggerJSDoc = require("swagger-jsdoc");
 const HSPort = ":" + 1234;
 const WSPort = ":" + 1235;
-const ip = "localhost";
-//const ip = "95.217.212.200";
+const ip     = "localhost";
+//const ip   = "95.217.212.200";
+const path   = "/home/john/repos/nodejs_game";
 
 const apiSHeader = {
     swaggerDefinition : {
@@ -13,7 +13,8 @@ const apiSHeader = {
             servers : ["http://" + ip + HSPort, "ws://" + ip + WSPort]
         }
     },
-    apis : ["./v1/api.js"]
+    apis : [path + "/v1/api.js"],
+    path : path
 };
 
-module.exports = swaggerJSDoc(apiSHeader);
+module.exports = apiSHeader;
