@@ -1,8 +1,8 @@
 const HSPort = ":" + 1234;
 const WSPort = ":" + 1235;
-//const ip   = "localhost";
-const ip     = "95.217.212.200";
-const path   = "/root/nodejs_game";
+const ip     = "localhost";
+//const ip   = "95.217.212.200";
+const path   = "/home/john/repos/nodejs_game/"; // change project path <<===|\|
 
 const apiSHeader = {
     swaggerDefinition : {

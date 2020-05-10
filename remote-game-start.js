@@ -1,4 +1,4 @@
-let engine = require("./game");
+const engine = require("./game");
 
 let game = engine.createGame("set 1 level");
 game.settings("set 1 level warnings 5");
