@@ -53,7 +53,7 @@ let setData = function (levelType) {
             let commands = description.split(' ');
             console.log(commands);
             if (commands[0] === "set") {
-                if (commands[1] > 0 && commands[1] <= 5 && commands[2] === "level") {
+                if (commands[1] > 0 && commands[1] <= this.game.levels && commands[2] === "level") {
                     let createdLevel = this.game.danger.reduce(function (mid, cur, index) {
                         return cur.level === commands[1] ? index : mid;
                     }, -1);
@@ -153,10 +153,8 @@ let setData = function (levelType) {
                         }
                         return element;
                     });
-                } else if (typeof(commands[2]) != "undefined" && commands[2] !== null && commands[1] === "background") {
-                    this.game.background = commands[2];
                 } else {
-                    console.log("Error, the game is not set");
+                    console.log("Error, the rule was not set");
                 }
             } else if (commands[0] === "create" && commands[1] === "character") {
                 switch (commands[2]) {
