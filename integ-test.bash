@@ -3,7 +3,6 @@ function request {
     cmd=`npm list | grep $1`
     if [[ $cmd != *$1* ]]
     then
-        echo "$1 error"
         return 1
     else
         return 0
