@@ -22,3 +22,5 @@ game.getBonus = function (hero) {
     return hero;
 };
 engine.start(game);
+
+module.exports = game;

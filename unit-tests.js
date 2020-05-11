@@ -1,6 +1,7 @@
-const engine = require("./game");
-const assert = require("assert");
-const axios  = require('axios');
+const engine  = require("./game");
+const assert  = require("assert");
+const axios   = require('axios');
+const ApiHead = require("./openApi");
 
 let game;
 let gameStruct = {
@@ -73,15 +74,15 @@ describe("Unit tests for nodejs-game", function() {
     });
     describe("Test requests", function() {
         it("send /api request", async () => {
-            let result = await sendRequest("http://localhost:1234/api");
+            let result = await sendRequest(ApiHead.swaggerDefinition.info.servers[0] + "/api");
             assert.equal(result.status, 200);
         });
         it("send /game request", async () => {
-            let result = await sendRequest("http://localhost:1234/game");
+            let result = await sendRequest(ApiHead.swaggerDefinition.info.servers[0] + "/game");
             assert.equal(result.status, 200);
         });
         it("send /asdasdasd request", async () => {
-            let result = await sendRequest("http://localhost:1234/asdasdasdasd");
+            let result = await sendRequest(ApiHead.swaggerDefinition.info.servers[0] + "/asdasdasdasd");
             assert.equal(result.data, "WRONG REQUEST. GO TO \'http://localhost:1234/api\'");
             end = 1;
         });
