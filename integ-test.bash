@@ -1,4 +1,3 @@
-# check npm modules
 function request {
     cmd=`npm list | grep $1`
     if [[ $cmd != *$1* ]]
