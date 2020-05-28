@@ -45,10 +45,10 @@ app.get("/*", (req, res) => {
     });
 });
 
-app.listen(1234);
+app.listen(ApiHead.swaggerDefinition.info.HSPort);
 
 let webSS = new newWS.Server({
-    port:1235
+    port:ApiHead.swaggerDefinition.info.WSPort
 });
 
 module.exports = webSS;
