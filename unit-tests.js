@@ -81,6 +81,10 @@ describe("Unit tests for nodejs-game", function() {
             let result = await sendRequest(ApiHead.swaggerDefinition.info.servers[0] + "/game");
             assert.equal(result.status, 200);
         });
+        it("send /doc request", async () => {
+            let result = await sendRequest(ApiHead.swaggerDefinition.info.servers[0] + "/doc");
+            assert.equal(result.status, 200);
+        });
         it("send /asdasdasd request", async () => {
             let result = await sendRequest(ApiHead.swaggerDefinition.info.servers[0] + "/asdasdasdasd");
             assert.equal(result.data, "WRONG REQUEST. GO TO \'" + ApiHead.swaggerDefinition.info.servers[0] + "/api\'");

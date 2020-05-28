@@ -1,6 +1,14 @@
 const webSS     = require("./server");
 const frameTime = 1000/60;
 
+/**
+ * Function that return a game structure for you server.
+ * @constructor
+ * @param {number} levelType - Positive number - amount of levels(sessions) in the game
+ * 
+ * @example
+ * setData(1)
+ */
 let setData = function (levelType) {
     return {
         game : {
@@ -14,6 +22,16 @@ let setData = function (levelType) {
             levels : levelType
         },
         sessions : [],
+        /**
+         * Function that creates a game structure for you server.
+         * @constructor
+         * @param {string} user - uuid of some user
+         * @param {number} w - width of user's browser (measured by pixels)
+         * @param {number} h - height of user's browser (measured by pixels)
+         * @example
+         * 
+         * joinUser("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d", 2560, 1440)
+         */
         joinUser : function (user, w, h) {
             for (let i = 0; i < this.sessions.length; i++) {
                 if (this.sessions[i].user === user)
@@ -46,9 +64,53 @@ let setData = function (levelType) {
             this.sessions[l] = prepareGame(this.sessions[l]);
             return l;
         },
+        /**
+         * Function that are called after defeat
+         * @constructor
+         * 
+         * @example
+         * 
+         * game.gameOver = function (curSession) {
+         *   if (typeof(curSession) !== "undefined")
+         *      curSession.status = "gameover";
+         *   return curSession;
+         * }
+         */
         gameOver : function () {},
+        /**
+         * Function that are called after dealing damage to an enemy
+         * @constructor
+         * @param {Object} hero - structure describing properties of game character
+         * @param {number} hero.hp - hero's hit points (positive number)
+         * @param {number} hero.speed - hero's speed (positive number)
+         * @param {number} hero.power - hero's power (positive number)
+         * 
+         * @example
+         * 
+         * getBonus(hero) {
+         *      hero.hp += 2;
+         *      return hero;
+         * }
+         */
         getBonus : function (hero) {},
+        /**
+         * Function that are called after victory
+         * @constructor
+         */
         victory  : function () {},
+        /**
+         * Function that are called for establishing game rules
+         * @constructor
+         * @param {string} description - set warnings for a level and create hero for the game
+         * 
+         * @example
+         * 
+         * game.victory = function (curSession) {
+         *   if (typeof(curSession) !== "undefined")
+         *      curSession.status = "victory";
+         *   return curSession;
+         * }
+         */
         settings : function (description) {
             let commands = description.split(' ');
             console.log(commands);
@@ -188,6 +250,14 @@ let setData = function (levelType) {
     };
 };
 
+/**
+ * Function that return a game structure for you server.
+ * @constructor
+ * @param {string} option - option that sets an amount of levels
+ * @example
+ * 
+ * createGame("set 1 level")
+ */
 let createGame = function (option) {
     const endless = 0;
     let order = option.split(' ');
@@ -203,6 +273,12 @@ let createGame = function (option) {
     }
 };
 
+/**
+ * Function are required for updating physics for all active sessions
+ * @constructor
+ * @param {Object} games - game object from createGame function
+ * @param {num} multiplier - element required for floating fps (missing frames)
+ */
 let physicsUpdate = function (games, multiplier) {
     for (let g_s = 0; g_s < 4; g_s++) {
         for (let j = 0; j < games.sessions.length; j++) {
@@ -260,6 +336,11 @@ let physicsUpdate = function (games, multiplier) {
     return games;
 };
 
+/**
+ * Function are required for defining layers' coordinates
+ * @constructor
+ * @param {Object} session - element of array are called sessions (game structure with user's properties)
+ */
 let prepareGame = function (session) {
     session.layers = [
         session.height / 4,
@@ -277,6 +358,10 @@ let prepareGame = function (session) {
     return session;
 };
 
+/**
+ * Main function for starting game and establishing ws_server's api
+ * @param {Object} struct - structure are returned by function "createGame"
+ */
 let start = function (struct) {
         let gameStructure = struct;
         webSS.on('connection', function (ws) {
