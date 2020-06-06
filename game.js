@@ -3,7 +3,6 @@ const frameTime = 1000/60;
 
 /**
  * Function that return a game structure for you server.
- * @constructor
  * @param {number} levelType - Positive number - amount of levels(sessions) in the game
  * 
  * @example
@@ -24,7 +23,6 @@ let setData = function (levelType) {
         sessions : [],
         /**
          * Function that creates a game structure for you server.
-         * @constructor
          * @param {string} user - uuid of some user
          * @param {number} w - width of user's browser (measured by pixels)
          * @param {number} h - height of user's browser (measured by pixels)
@@ -66,7 +64,6 @@ let setData = function (levelType) {
         },
         /**
          * Function that are called after defeat
-         * @constructor
          * 
          * @example
          * 
@@ -79,7 +76,6 @@ let setData = function (levelType) {
         gameOver : function () {},
         /**
          * Function that are called after dealing damage to an enemy
-         * @constructor
          * @param {Object} hero - structure describing properties of game character
          * @param {number} hero.hp - hero's hit points (positive number)
          * @param {number} hero.speed - hero's speed (positive number)
@@ -95,12 +91,10 @@ let setData = function (levelType) {
         getBonus : function (hero) {},
         /**
          * Function that are called after victory
-         * @constructor
          */
         victory  : function () {},
         /**
          * Function that are called for establishing game rules
-         * @constructor
          * @param {string} description - set warnings for a level and create hero for the game
          * 
          * @example
@@ -252,7 +246,6 @@ let setData = function (levelType) {
 
 /**
  * Function that return a game structure for you server.
- * @constructor
  * @param {string} option - option that sets an amount of levels
  * @example
  * 
@@ -275,7 +268,6 @@ let createGame = function (option) {
 
 /**
  * Function are required for updating physics for all active sessions
- * @constructor
  * @param {Object} games - game object from createGame function
  * @param {num} multiplier - element required for floating fps (missing frames)
  */
@@ -338,7 +330,6 @@ let physicsUpdate = function (games, multiplier) {
 
 /**
  * Function are required for defining layers' coordinates
- * @constructor
  * @param {Object} session - element of array are called sessions (game structure with user's properties)
  */
 let prepareGame = function (session) {
