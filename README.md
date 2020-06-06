@@ -10,7 +10,7 @@
 ```
     pm2 start remote-game-start.js
 ```
-    or
+   or
 ```
     node remote-game-start.js
 ```
@@ -24,7 +24,7 @@
 ```
     source ./unit-test.bash
 ```
-    - command for starting integration tests:
+   - command for starting integration tests:
 ```
     source ./integ-test.bash
 ```
