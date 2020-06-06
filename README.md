@@ -5,26 +5,26 @@
 
 ### How to:
 * run on the server.
-- change constants IP and path in OpenApi.js
-- run:
+    - change constants IP and path in OpenApi.js
+    - run:
 ```
     pm2 start remote-game-start.js
 ```
-or
+    or
 ```
     node remote-game-start.js
 ```
 * generate documentation
-- run:
+    - run:
 ```
     ./node_modules/.bin/jsdoc ./game.js ./README.md
 ```
 * run tests
-- command for starting unit tests:
+    - command for starting unit tests:
 ```
     source ./unit-test.bash
 ```
-- command for starting integration tests:
+    - command for starting integration tests:
 ```
     source ./integ-test.bash
 ```
