@@ -26,6 +26,9 @@ let sendRequest = function (url) {
     });
 };
 
+
+// comment
+
 let end = 0;
 setInterval(() => {
     if (end === 1)
