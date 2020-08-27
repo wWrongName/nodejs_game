@@ -1,15 +1,12 @@
 name: Greetings
 
-on: [pull_request]
+on: [push]
 
 jobs:
   greeting:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/first-interaction@v1
+    - uses: actions/checkout@v1
     - name: Run tests
       run: |
-        git pull origin master || (git stash && git pull)
-        ./node_modules/.bin/jsdoc ./game.js ./README.md
-        source integ-test.bash
-        pm2 start remote-game-start.js
+        npm i
