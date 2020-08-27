@@ -11,4 +11,5 @@ jobs:
       run: |
         npm i
         npm install --save-dev mocha
+        npm install axios
         ./node_modules/mocha/bin/mocha unit-tests.js
