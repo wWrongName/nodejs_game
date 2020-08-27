@@ -10,4 +10,5 @@ jobs:
     - name: Run tests
       run: |
         npm i
+        npm install --save-dev mocha
         ./node_modules/mocha/bin/mocha unit-tests.js
