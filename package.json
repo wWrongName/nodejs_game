@@ -1,0 +1,29 @@
+{
+  "name": "nodejs_game",
+  "version": "1.0.0",
+  "description": "* Version 1.4 * You can find API on http://95.217.212.200:1234/api",
+  "main": "remote-game-start.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "http-server": "^0.12.3",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
+    "ws": "^7.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wWrongName/nodejs_game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wWrongName/nodejs_game/issues"
+  },
+  "homepage": "https://github.com/wWrongName/nodejs_game#readme"
+}
